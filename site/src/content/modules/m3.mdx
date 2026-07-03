@@ -1,0 +1,32 @@
+---
+number: 3
+title: CNNの構成要素
+minutes: 90
+description: 活性化関数ファミリー、softmaxとcross-entropy、畳み込み・padding・pooling、CNN内のテンソル形状の流れ。
+---
+
+import QuizBlock from "../../components/ui/QuizBlock.tsx";
+import Column from "../../components/ui/Column.astro";
+import TermDef from "../../components/ui/TermDef.astro";
+
+> このページは基盤フェーズのプレースホルダです。本文は後続の本文バッチが執筆します。
+
+## 活性化関数ファミリーと softmax
+
+Sigmoid・tanh・ReLU・LeakyReLU の違いと、多クラス分類での softmax・cross-entropy の役割を扱います。（本文は後続で加筆します。）
+
+## 畳み込み — 重みを使い回す線形演算
+
+<TermDef en="Convolution">畳み込み</TermDef>は同じ重みを位置をずらしながら適用する演算です。padding と stride、pooling によってテンソルの形がどう変わるかを追います。（本文は後続で加筆します。）
+
+## CNN内のテンソル形状の流れ
+
+$3\times32\times32$ の画像が層を通るうちにどう形を変え、最終的に分類ベクトルへ至るのかを見ていきます。（本文は後続で加筆します。）
+
+<Column title="LLM API に触れてみる">
+原典スライド03のQuiz題材をもとに、LLM API を実際に呼び出してみる小さな体験コラムです。（本文は後続で加筆します。）
+</Column>
+
+## 確認クイズ
+
+<QuizBlock module="m3" client:visible />

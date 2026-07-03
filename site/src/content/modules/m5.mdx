@@ -1,0 +1,33 @@
+---
+number: 5
+title: 過学習との戦い — データ拡張と正則化
+minutes: 90
+description: 汎化と学習曲線、データ拡張とTTA、Dropout・BatchNormの直感。学習曲線シミュレータで乖離を観察。
+colab:
+  - label: CIFAR-100 改善実験 その2
+    url: https://colab.research.google.com/github/example/ml4innovation-notebooks/blob/main/notebooks/m5_cifar100_2.ipynb
+---
+
+import QuizBlock from "../../components/ui/QuizBlock.tsx";
+import ColabBadge from "../../components/ui/ColabBadge.astro";
+import TermDef from "../../components/ui/TermDef.astro";
+
+> このページは基盤フェーズのプレースホルダです。本文は後続の本文バッチが執筆します。
+
+## 汎化と学習曲線の読み方
+
+<TermDef en="Overfitting">過学習</TermDef>と未学習、汎化のバランスを、train / validation の学習曲線の乖離から読み取ります。（本文は後続で加筆します。）
+
+## データ拡張と Test Time Augmentation
+
+flip / crop / 色変換 / RandomErase などのデータ拡張と、推論時に複数変換の平均を取る TTA を扱います。（本文は後続で加筆します。）
+
+## Dropout と BatchNorm
+
+Dropout を「弱いネットの多数決」、BatchNorm を「分布を揃えてから学習可能な $\gamma,\beta$ で戻す」という直感で説明します。（本文は後続で加筆します。）
+
+<ColabBadge url="https://colab.research.google.com/github/example/ml4innovation-notebooks/blob/main/notebooks/m5_cifar100_2.ipynb" label="CIFAR-100 改善実験 その2（Dropout / BN / DA を効かせる）" />
+
+## 確認クイズ
+
+<QuizBlock module="m5" client:visible />

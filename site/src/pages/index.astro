@@ -1,0 +1,158 @@
+---
+// トップページ。コース概要＋7モジュールカード（所要時間・クイズ達成率）。
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { moduleHref } from "../lib/paths";
+
+const modules = (await getCollection("modules")).sort((a, b) => a.data.number - b.data.number);
+---
+
+<BaseLayout title="インタラクティブML学習" prose={false}>
+  <div class="home wide">
+    <section class="home__hero prose">
+      <h1>パラメータを動かして学ぶ、機械学習の入門</h1>
+      <p>
+        大学院講義「Machine Learning for Innovation（#ESDD508、全7回）」の内容を、
+        スライダーを操作しながら試行錯誤して学べる日本語教材にしました。
+        情報工学は未習でも、線形代数・微積分の知識があれば読み進められます。
+        1モジュールおよそ90分、全7回で完結します。
+      </p>
+      <p>
+        各モジュールは「なぜ必要か → 直感 → 式 → 可視化で試す」の流れで進み、
+        最後に確認クイズがあります。クイズの回答状況はこのブラウザに保存され、
+        下のカードに達成率として表示されます。
+      </p>
+    </section>
+
+    <section class="home__modules">
+      <h2 class="home__modules-title prose">モジュール一覧</h2>
+      <ul class="cards">
+        {
+          modules.map((m) => (
+            <li class="card">
+              <a class="card__link" href={moduleHref(m.id)}>
+                <div class="card__top">
+                  <span class="card__num">M{m.data.number}</span>
+                  <span class="card__minutes">約 {m.data.minutes} 分</span>
+                </div>
+                <h3 class="card__title">{m.data.title}</h3>
+                <p class="card__desc">{m.data.description}</p>
+                <p class="card__rate" data-module={m.id} data-state="loading">
+                  クイズ: 読み込み中…
+                </p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+
+  <style>
+    .home__hero h1 {
+      margin-top: 0;
+    }
+    .home__modules {
+      margin-top: var(--space-8);
+    }
+    .home__modules-title {
+      margin-bottom: var(--space-4);
+    }
+    .cards {
+      list-style: none;
+      margin: 0;
+      padding: 0 var(--space-4);
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-4);
+    }
+    .card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-bg);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-accent);
+    }
+    .card__link {
+      display: block;
+      padding: var(--space-4);
+      color: var(--color-text);
+      height: 100%;
+    }
+    .card__link:hover {
+      text-decoration: none;
+    }
+    .card__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: var(--text-sm);
+    }
+    .card__num {
+      font-weight: 700;
+      color: var(--color-accent);
+    }
+    .card__minutes {
+      color: var(--color-text-muted);
+    }
+    .card__title {
+      margin: var(--space-2) 0;
+      font-size: var(--text-lg);
+    }
+    .card__desc {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-3);
+    }
+    .card__rate {
+      margin: 0;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+    .card__rate[data-state="done"] {
+      color: var(--color-correct);
+    }
+    .card__rate[data-state="partial"] {
+      color: var(--color-accent);
+    }
+  </style>
+
+  <script>
+    // クイズ達成率をlocalStorageから読み、各カードに反映する。
+    // キーは "mlsite:quiz:<moduleSlug>"（QuizBlock と共通）。
+    const nodes = document.querySelectorAll<HTMLElement>(".card__rate");
+    nodes.forEach((el) => {
+      const mod = el.dataset.module;
+      if (!mod) return;
+      let text = "クイズ: 未回答";
+      let state = "none";
+      try {
+        const raw = localStorage.getItem(`mlsite:quiz:${mod}`);
+        if (raw) {
+          const p = JSON.parse(raw) as {
+            correct: number;
+            total: number;
+            answered: (number | null)[];
+          };
+          const answeredCount = Array.isArray(p.answered)
+            ? p.answered.filter((a) => a !== undefined && a !== null).length
+            : 0;
+          if (p.total > 0 && answeredCount > 0) {
+            const pct = Math.round((p.correct / p.total) * 100);
+            text = `クイズ: 正解 ${p.correct}/${p.total}（${pct}%）`;
+            state = answeredCount >= p.total ? "done" : "partial";
+          }
+        }
+      } catch {
+        /* パース失敗時は未回答表示のまま */
+      }
+      el.textContent = text;
+      el.dataset.state = state;
+    });
+  </script>
+</BaseLayout>

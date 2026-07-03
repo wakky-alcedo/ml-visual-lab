@@ -1,0 +1,39 @@
+---
+// 用語の初出マーク。日英対訳を表示し、用語集ページの該当項目へリンクする。
+// 用語IDは英語名の kebab-case（例 gradient-descent）で一意。id 省略時は en から自動生成。
+// 使い方: <TermDef en="Gradient Descent">勾配降下法</TermDef>
+//         <TermDef en="Convolution" id="convolution">畳み込み</TermDef>
+import { toSlug } from "../../lib/slug";
+
+interface Props {
+  /** 英語表記（対訳・スラグ生成に使用）。 */
+  en: string;
+  /** 用語集のアンカーID（省略時は en を kebab-case 化）。 */
+  id?: string;
+}
+
+const { en, id } = Astro.props;
+const slug = id ?? toSlug(en);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const href = `${base}/glossary#${slug}`;
+---
+
+<a class="termdef" href={href} title={`用語集: ${en}`}>
+  <slot /><span class="termdef__en">（{en}）</span>
+</a>
+
+<style>
+  .termdef {
+    color: var(--color-text);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--color-accent);
+    white-space: nowrap;
+  }
+  .termdef:hover {
+    color: var(--color-accent);
+  }
+  .termdef__en {
+    color: var(--color-text-muted);
+    font-size: 0.9em;
+  }
+</style>

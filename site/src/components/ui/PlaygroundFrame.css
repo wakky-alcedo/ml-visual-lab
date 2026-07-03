@@ -1,0 +1,65 @@
+.pg {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+  margin: var(--space-6) auto;
+  overflow: hidden;
+}
+
+.pg__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pg__title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.pg__reset {
+  flex: none;
+}
+
+.pg__guide {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-accent-soft);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+.pg__guide::before {
+  content: "試してみよう: ";
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.pg__body {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) 1fr;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.pg__controls {
+  min-width: 0;
+}
+
+.pg__canvas {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* スマホ: 操作パネルを上に縦積み。 */
+@media (max-width: 640px) {
+  .pg__body {
+    grid-template-columns: 1fr;
+  }
+}

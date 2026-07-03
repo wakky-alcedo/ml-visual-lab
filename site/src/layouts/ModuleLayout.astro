@@ -1,0 +1,208 @@
+---
+// モジュール本文のレイアウト。目次サイドバー＋前後モジュールナビを提供する。
+// 本文（MDXレンダリング結果）は <slot /> で受け取る。
+import BaseLayout from "./BaseLayout.astro";
+import ColabBadge from "../components/ui/ColabBadge.astro";
+import { moduleHref } from "../lib/paths";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+interface NavLink {
+  slug: string;
+  number: number;
+  title: string;
+}
+interface ColabLink {
+  label: string;
+  url: string;
+}
+
+interface Props {
+  number: number;
+  title: string;
+  minutes: number;
+  description?: string;
+  headings: Heading[];
+  colab?: ColabLink[];
+  prev?: NavLink;
+  next?: NavLink;
+}
+
+const { number, title, minutes, description, headings, colab, prev, next } = Astro.props;
+// 目次は h2 / h3 のみ。
+const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<BaseLayout title={title} description={description} prose={false}>
+  <div class="module wide">
+    <div class="module__layout">
+      <article class="module__content">
+        <p class="module__eyebrow">モジュール {number} ・ 目安 {minutes} 分</p>
+        <h1 class="module__title">{title}</h1>
+
+        {
+          colab && colab.length > 0 && (
+            <div class="module__colab">
+              {colab.map((c) => (
+                <ColabBadge url={c.url} label={c.label} />
+              ))}
+            </div>
+          )
+        }
+
+        <div class="module__body">
+          <slot />
+        </div>
+
+        <nav class="module__pager" aria-label="モジュール間ナビ">
+          {
+            prev ? (
+              <a class="module__pager-link module__pager-link--prev" href={moduleHref(prev.slug)}>
+                <span class="module__pager-dir">← 前のモジュール</span>
+                <span class="module__pager-title">
+                  M{prev.number} {prev.title}
+                </span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+          {
+            next ? (
+              <a class="module__pager-link module__pager-link--next" href={moduleHref(next.slug)}>
+                <span class="module__pager-dir">次のモジュール →</span>
+                <span class="module__pager-title">
+                  M{next.number} {next.title}
+                </span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+        </nav>
+      </article>
+
+      <aside class="module__toc" aria-label="目次">
+        <div class="module__toc-inner">
+          <p class="module__toc-title">目次</p>
+          <ul class="module__toc-list">
+            {
+              tocHeadings.map((h) => (
+                <li class={h.depth === 3 ? "is-sub" : ""}>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <style>
+    .module {
+      padding-inline: var(--space-4);
+    }
+    .module__layout {
+      display: grid;
+      grid-template-columns: 1fr minmax(180px, 220px);
+      gap: var(--space-8);
+      align-items: start;
+    }
+    .module__content {
+      min-width: 0;
+      max-width: var(--width-prose);
+    }
+    .module__eyebrow {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-1);
+    }
+    .module__title {
+      margin-top: 0;
+    }
+    .module__colab {
+      margin-bottom: var(--space-4);
+    }
+
+    .module__pager {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-top: var(--space-10);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border);
+    }
+    .module__pager-link {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      padding: var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      max-width: 48%;
+    }
+    .module__pager-link:hover {
+      text-decoration: none;
+      border-color: var(--color-accent);
+    }
+    .module__pager-link--next {
+      text-align: right;
+    }
+    .module__pager-dir {
+      font-size: var(--text-sm);
+      color: var(--color-accent);
+    }
+    .module__pager-title {
+      color: var(--color-text);
+      font-weight: 600;
+    }
+
+    .module__toc-inner {
+      position: sticky;
+      top: calc(var(--space-8) + 1rem);
+      font-size: var(--text-sm);
+    }
+    .module__toc-title {
+      font-weight: 700;
+      margin: 0 0 var(--space-2);
+    }
+    .module__toc-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      border-left: 2px solid var(--color-border);
+    }
+    .module__toc-list li {
+      padding-left: var(--space-3);
+    }
+    .module__toc-list li.is-sub {
+      padding-left: var(--space-5);
+    }
+    .module__toc-list a {
+      color: var(--color-text-muted);
+    }
+    .module__toc-list a:hover {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    @media (max-width: 820px) {
+      .module__layout {
+        grid-template-columns: 1fr;
+      }
+      .module__toc {
+        order: -1;
+      }
+      .module__toc-inner {
+        position: static;
+      }
+    }
+  </style>
+</BaseLayout>

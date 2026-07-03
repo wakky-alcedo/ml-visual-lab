@@ -1,0 +1,40 @@
+---
+// 「Open in Colab」バッジリンク。URL は notebooks/ の GitHub 経由 Colab リンクを渡す。
+// 使い方: <ColabBadge url="https://colab.research.google.com/github/..." label="論理演算の練習" />
+interface Props {
+  /** Colab を開くURL。 */
+  url: string;
+  /** バッジ横に添えるノートブックの説明（任意）。 */
+  label?: string;
+}
+
+const { url, label } = Astro.props;
+---
+
+<a class="colab" href={url} target="_blank" rel="noopener noreferrer">
+  <img
+    src="https://colab.research.google.com/assets/colab-badge.svg"
+    alt="Open in Colab"
+    width="117"
+    height="20"
+    loading="lazy"
+  />
+  {label && <span class="colab__label">{label}</span>}
+</a>
+
+<style>
+  .colab {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    margin: var(--space-2) 0;
+  }
+  .colab:hover {
+    text-decoration: none;
+  }
+  .colab__label {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+  }
+</style>

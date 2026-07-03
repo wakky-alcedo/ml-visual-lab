@@ -1,0 +1,37 @@
+.ui-slider {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.ui-slider__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.ui-slider__label {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.ui-slider__value {
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.ui-slider input[type="range"] {
+  width: 100%;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  height: 1.5rem;
+}
+
+.ui-slider input[type="range"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

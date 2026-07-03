@@ -1,0 +1,33 @@
+---
+number: 4
+title: 学習のしくみ — 勾配降下と最適化
+minutes: 90
+description: 損失関数と勾配降下、誤差逆伝播の直感、SGD・Momentum・Adam、学習率スケジューリング。
+colab:
+  - label: CIFAR-100 改善実験 その1
+    url: https://colab.research.google.com/github/example/ml4innovation-notebooks/blob/main/notebooks/m4_cifar100_1.ipynb
+---
+
+import QuizBlock from "../../components/ui/QuizBlock.tsx";
+import ColabBadge from "../../components/ui/ColabBadge.astro";
+import TermDef from "../../components/ui/TermDef.astro";
+
+> このページは基盤フェーズのプレースホルダです。本文は後続の本文バッチが執筆します。
+
+## 損失関数と勾配降下
+
+<TermDef en="Gradient Descent">勾配降下法</TermDef>は、損失を小さくする向きへパラメータを少しずつ動かす手法です。ボールが谷を転がり落ち、学習率がその一歩の幅にあたる、という例えで直感をつかみます。式は $\theta \leftarrow \theta - \eta\,\partial L/\partial\theta$ です。（本文は後続で加筆します。）
+
+## 誤差逆伝播はバケツリレー
+
+<TermDef en="Backpropagation">誤差逆伝播法</TermDef>を、連鎖律で勾配を層から層へバケツリレーする、という直感のレベルまで説明します。（本文は後続で加筆します。）
+
+## SGD・Momentum・Adam
+
+ミニバッチとエポック、Momentum、Adam、学習率スケジューリング（Step・Cosine）を、式は結果のみで扱います。（本文は後続で加筆します。）
+
+<ColabBadge url="https://colab.research.google.com/github/example/ml4innovation-notebooks/blob/main/notebooks/m4_cifar100_1.ipynb" label="CIFAR-100 改善実験 その1（授業課題2に直結）" />
+
+## 確認クイズ
+
+<QuizBlock module="m4" client:visible />

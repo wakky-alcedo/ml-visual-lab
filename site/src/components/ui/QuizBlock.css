@@ -1,0 +1,117 @@
+.quiz {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: var(--space-4);
+  margin: var(--space-6) 0;
+}
+
+.quiz--empty {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.quiz__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.quiz__score {
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.quiz__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.quiz__question {
+  margin: 0 0 var(--space-3);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.quiz__choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.quiz__choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: left;
+  font: inherit;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.quiz__choice:hover:not(:disabled) {
+  border-color: var(--color-accent);
+}
+.quiz__choice:disabled {
+  cursor: default;
+}
+.quiz__choice.is-selected {
+  border-color: var(--color-accent);
+}
+.quiz__choice.is-correct {
+  border-color: var(--color-correct);
+  background: var(--color-correct-soft);
+}
+.quiz__choice.is-wrong {
+  border-color: var(--color-incorrect);
+  background: var(--color-incorrect-soft);
+}
+
+.quiz__marker {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--color-surface-2);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+.quiz__choice.is-correct .quiz__marker {
+  background: var(--color-correct);
+  color: #fff;
+}
+.quiz__choice.is-wrong .quiz__marker {
+  background: var(--color-incorrect);
+  color: #fff;
+}
+
+.quiz__explain {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+.quiz__explain.is-correct {
+  background: var(--color-correct-soft);
+}
+.quiz__explain.is-wrong {
+  background: var(--color-incorrect-soft);
+}
+
+.quiz__footer {
+  margin-top: var(--space-4);
+}

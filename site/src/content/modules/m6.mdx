@@ -1,0 +1,38 @@
+---
+number: 6
+title: 転移学習 — 少ないデータで賢く
+minutes: 90
+description: 小データでの過学習を避ける事前学習済み特徴抽出器＋古典分類器の実務パターンと特徴空間の観察。
+colab:
+  - label: 自前画像の多クラス分類
+    url: https://colab.research.google.com/github/example/ml4innovation-notebooks/blob/main/notebooks/m6_img2feat.ipynb
+---
+
+import QuizBlock from "../../components/ui/QuizBlock.tsx";
+import ColabBadge from "../../components/ui/ColabBadge.astro";
+import Column from "../../components/ui/Column.astro";
+import TermDef from "../../components/ui/TermDef.astro";
+
+> このページは基盤フェーズのプレースホルダです。本文は後続の本文バッチが執筆します。
+
+## なぜ転移学習か
+
+小さなデータで深いモデルを一から学習すると過学習します。そこで、事前学習済みの特徴抽出器に古典的な分類器を組み合わせる実務パターンを学びます。（本文は後続で加筆します。）
+
+## img2feat ＋ scikit-learn パイプライン
+
+<TermDef en="Transfer Learning">転移学習</TermDef>の具体的な流れとして、画像から特徴を取り出し、それを古典分類器に渡すパイプラインを組み立てます。（本文は後続で加筆します。）
+
+## 特徴空間を観察する
+
+事前学習特徴を2次元へ落とした散布図で、クラスがどの程度きれいに分かれるかを観察します。（本文は後続で加筆します。）
+
+<Column title="製造業のML活用事例">
+外観検査・サロゲートモデル・実験データ解析など、機械工学に近い現場での活用例を紹介するコラムです。（本文は後続で加筆します。）
+</Column>
+
+<ColabBadge url="https://colab.research.google.com/github/example/ml4innovation-notebooks/blob/main/notebooks/m6_img2feat.ipynb" label="自前画像の多クラス分類（最終レポートに直結）" />
+
+## 確認クイズ
+
+<QuizBlock module="m6" client:visible />

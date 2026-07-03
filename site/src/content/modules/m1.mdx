@@ -1,0 +1,32 @@
+---
+number: 1
+title: AI・機械学習・深層学習とは
+minutes: 90
+description: AI⊃ML⊃DLの関係、モデル＝パラメータを持つ関数、DLの4要素と、過学習を体感する多項式フィッティング実験。
+---
+
+import QuizBlock from "../../components/ui/QuizBlock.tsx";
+import Column from "../../components/ui/Column.astro";
+import TermDef from "../../components/ui/TermDef.astro";
+
+> このページは基盤フェーズのプレースホルダです。本文は後続の本文バッチが執筆します。
+
+## AI・機械学習・深層学習の関係
+
+<TermDef en="Machine Learning">機械学習</TermDef>や<TermDef en="Deep Learning">深層学習</TermDef>が、人工知能（AI）の中でどのような位置づけにあるのかを整理します。ここでは概念の入れ子関係と、それぞれが得意とすることの違いをつかむことを目標にします。（本文は後続で加筆します。）
+
+## モデルとは — パラメータを持つ関数
+
+<TermDef en="Model">モデル</TermDef>とは、入力 $x$ からパラメータ $\theta$ を使って出力を求める関数 $y = f(x;\theta)$ のことです。学習とはこのパラメータを良い値へ調整する作業である、という見方をここで身につけます。（本文は後続で加筆します。）
+
+## 深層学習の4要素と過学習
+
+データ・アーキテクチャ・損失・最適化という4要素と、モデル容量と<TermDef en="Overfitting">過学習</TermDef>の関係を扱います。次数を上げすぎた曲線あてはめが、実験ノイズまで再現してしまう様子をイメージしてください。（本文は後続で加筆します。）
+
+<Column title="生成AIまでの年表">
+生成AIが登場するまでの流れを、就活の教養として短くまとめるコラムです。（本文は後続で加筆します。）
+</Column>
+
+## 確認クイズ
+
+<QuizBlock module="m1" client:visible />

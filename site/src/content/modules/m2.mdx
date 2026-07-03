@@ -1,0 +1,33 @@
+---
+number: 2
+title: ニューロンで論理を組む
+minutes: 90
+description: ニューロン＝線形重み付け＋活性化。単層・2層ネットで論理演算を作り、決定境界を操作盤で体感する。
+colab:
+  - label: 論理演算・min/max 練習ノートブック
+    url: https://colab.research.google.com/github/example/ml4innovation-notebooks/blob/main/notebooks/m2_logic.ipynb
+---
+
+import QuizBlock from "../../components/ui/QuizBlock.tsx";
+import ColabBadge from "../../components/ui/ColabBadge.astro";
+import TermDef from "../../components/ui/TermDef.astro";
+
+> このページは基盤フェーズのプレースホルダです。本文は後続の本文バッチが執筆します。
+
+## ニューロン＝線形重み付け＋活性化
+
+<TermDef en="Neuron">ニューロン</TermDef>は入力に重みを掛けて足し合わせ、<TermDef en="Activation Function">活性化関数</TermDef>を通して出力します。式 $y = f(w^\top x + b)$ の各記号が何を表すのかを確認します。（本文は後続で加筆します。）
+
+## 単層・2層ネットで論理を組む
+
+単層ネットで AND / OR / NOT を、2層ネットと one-hot で min / max を作ります（授業課題1と同形式）。（本文は後続で加筆します。）
+
+## Train / Validation / Test の使い分け
+
+テストデータを学習に使うのは「カンニング」にあたる、という考え方をここで押さえます。（本文は後続で加筆します。）
+
+<ColabBadge url="https://colab.research.google.com/github/example/ml4innovation-notebooks/blob/main/notebooks/m2_logic.ipynb" label="論理演算・min/max の練習" />
+
+## 確認クイズ
+
+<QuizBlock module="m2" client:visible />

@@ -1,0 +1,95 @@
+---
+// サイト共通レイアウト。<head>、グローバルCSS、KaTeX CSS、ヘッダーナビ、フッターを提供する。
+import "../styles/global.css";
+import "katex/dist/katex.min.css";
+import { href } from "../lib/paths";
+
+interface Props {
+  title: string;
+  description?: string;
+  /** 本文を狭幅(prose)で中央寄せするか。可視化ページでは false にして自前でレイアウト。 */
+  prose?: boolean;
+}
+
+const { title, description, prose = true } = Astro.props;
+const siteTitle = "インタラクティブML学習";
+const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-header__brand" href={href("/")}>インタラクティブML学習</a>
+        <nav class="site-header__nav" aria-label="メイン">
+          <a href={href("/")}>ホーム</a>
+          <a href={href("/glossary")}>用語集</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class={prose ? "site-main prose" : "site-main"}>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="prose">
+        <p>
+          大学院講義「Machine Learning for Innovation（#ESDD508）」の内容を、
+          パラメータを操作しながら学ぶ日本語教材です。
+        </p>
+      </div>
+    </footer>
+
+    <style>
+      .site-header {
+        border-bottom: 1px solid var(--color-border);
+        background: var(--color-bg);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .site-header__inner {
+        max-width: var(--width-wide);
+        margin-inline: auto;
+        padding: var(--space-3) var(--space-4);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+      }
+      .site-header__brand {
+        font-weight: 700;
+        color: var(--color-text);
+      }
+      .site-header__brand:hover {
+        text-decoration: none;
+        color: var(--color-accent);
+      }
+      .site-header__nav {
+        display: flex;
+        gap: var(--space-4);
+        font-size: var(--text-sm);
+      }
+      .site-main {
+        padding-block: var(--space-6) var(--space-10);
+        min-height: 60vh;
+      }
+      .site-footer {
+        border-top: 1px solid var(--color-border);
+        background: var(--color-surface);
+        padding-block: var(--space-6);
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+      }
+    </style>
+  </body>
+</html>

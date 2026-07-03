@@ -1,0 +1,76 @@
+---
+// 用語集ページ。src/data/glossary.ts から生成（日英対訳）。
+// 各項目の id は英語名の kebab-case で、TermDef のリンク先 /glossary#<id> と一致する。
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { glossary } from "../data/glossary";
+---
+
+<BaseLayout title="用語集" description="機械学習の主要用語を日英対訳で解説します。">
+  <h1>用語集</h1>
+  <p>
+    本教材に登場する主要な用語を、日本語（English）の対訳形式でまとめました。
+    授業スライドが英語のため、英語表記もあわせて確認できるようにしています。
+    本文中の <span class="gloss-example">用語（English）</span> をクリックすると、
+    この一覧の該当項目へ移動します。（現在は{glossary.length}語のシード版です。）
+  </p>
+
+  <dl class="glossary">
+    {
+      glossary.map((term) => (
+        <div class="glossary__item" id={term.id}>
+          <dt class="glossary__term">
+            {term.ja}
+            <span class="glossary__en">（{term.en}）</span>
+          </dt>
+          <dd class="glossary__desc">
+            {term.description}
+            {term.modules && term.modules.length > 0 && (
+              <span class="glossary__modules">登場: M{term.modules.join(", M")}</span>
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <style>
+    .gloss-example {
+      border-bottom: 1px dashed var(--color-accent);
+    }
+    .glossary {
+      margin: var(--space-6) 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .glossary__item {
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--space-4);
+      scroll-margin-top: var(--space-10);
+    }
+    .glossary__item:target {
+      background: var(--color-accent-soft);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      border-top-color: transparent;
+    }
+    .glossary__term {
+      font-weight: 700;
+      font-size: var(--text-lg);
+    }
+    .glossary__en {
+      color: var(--color-text-muted);
+      font-size: 0.9em;
+      font-weight: 400;
+    }
+    .glossary__desc {
+      margin: var(--space-2) 0 0;
+    }
+    .glossary__modules {
+      display: block;
+      margin-top: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+  </style>
+</BaseLayout>
