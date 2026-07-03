@@ -1,0 +1,12 @@
+# 依存・ビルド成果物
+node_modules/
+dist/
+.astro/
+
+# 原典講義スライド（著作物のためリポジトリに含めない。127MBの巨大ファイルもあり
+# GitHubの100MB制限も超える）
+reference/
+
+# ローカル設定
+.claude/settings.local.json
+.DS_Store
