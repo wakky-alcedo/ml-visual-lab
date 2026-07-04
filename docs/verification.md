@@ -29,6 +29,6 @@
 
 ## Colabリンクの有効化に必要な作業
 
-バッジURLは `https://colab.research.google.com/github/wakky-alcedo/machine-learning-text/blob/main/notebooks/…` を想定。
-GitHubに **public** リポジトリ `wakky-alcedo/machine-learning-text` としてpushすると有効になる。
+バッジURLは `https://colab.research.google.com/github/wakky-alcedo/ml-visual-lab/blob/main/notebooks/…` を想定。
+GitHubに **public** リポジトリ `wakky-alcedo/ml-visual-lab` としてpushすると有効になる。
 リポジトリ名を変える場合は `site/src/content/modules/m*.mdx` のfrontmatter内URLを一括置換すること。

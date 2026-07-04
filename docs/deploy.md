@@ -68,7 +68,7 @@ npx wrangler pages deploy dist --project-name=mlsite
 
 GitHubにpushするだけで自動ビルド＆デプロイしたい場合:
 ダッシュボード → Workers & Pages → 作成 → Pages → 「Gitに接続」で
-`wakky-alcedo/machine-learning-text` を選び、
+`wakky-alcedo/ml-visual-lab` を選び、
 ビルド設定を「フレームワーク: Astro／ルートディレクトリ: `site`／
 ビルドコマンド: `npm run build`／出力: `dist`」とする。
 ※直アップロード運用（上記）と混在はできないため、切り替える場合はプロジェクトを作り直す。
@@ -77,8 +77,8 @@ GitHubにpushするだけで自動ビルド＆デプロイしたい場合:
 
 本文中の「Open in Colab」バッジは GitHub 上のノートブックを参照する。
 
-1. GitHubで public リポジトリ `wakky-alcedo/machine-learning-text` を作成
-2. `git remote add origin git@github.com:wakky-alcedo/machine-learning-text.git`
+1. GitHubで public リポジトリ `wakky-alcedo/ml-visual-lab` を作成
+2. `git remote add origin git@github.com:wakky-alcedo/ml-visual-lab.git`
 3. `git push -u origin main`
 
 `reference/`（講義PDF）は .gitignore 済みでpushされない。
