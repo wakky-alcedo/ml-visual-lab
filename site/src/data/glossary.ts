@@ -13,6 +13,8 @@ export interface GlossaryTerm {
   id?: string;
   /** 関連するモジュール番号（任意）。 */
   modules?: number[];
+  /** インライングラフのキー（用語集ページで対応するチャートを描画する）。 */
+  chart?: "sigmoid" | "cross-entropy";
 }
 
 const rawTerms: GlossaryTerm[] = [
@@ -235,6 +237,7 @@ const rawTerms: GlossaryTerm[] = [
     description:
       "任意の実数を0〜1の範囲に滑らかに押し込むS字カーブの関数で、σ(z) = 1/(1+e⁻ᶻ) で定義されます。出力を確率として解釈できる利点がある一方、入力が極端に大きいと傾き（勾配）がほぼ0になる弱点があります。",
     modules: [2, 3],
+    chart: "sigmoid",
   },
   {
     en: "Decision Boundary",
@@ -341,6 +344,7 @@ const rawTerms: GlossaryTerm[] = [
     description:
       "予測した確率分布と正解のone-hotラベルのズレを測る損失関数です。正解クラスに高い確率を割り当てるほど損失は小さくなり、外れるほど指数関数的に大きなペナルティがかかります。",
     modules: [3, 7],
+    chart: "cross-entropy",
   },
   {
     en: "KL Divergence",
