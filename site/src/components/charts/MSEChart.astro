@@ -1,0 +1,82 @@
+---
+const W = 480, H = 220;
+const padTop = 20, padRight = 20, padBottom = 40, padLeft = 50;
+const plotW = W - padLeft - padRight;
+const plotH = H - padTop - padBottom;
+const xMin = -2, xMax = 2, yMin = 0, yMax = 4;
+
+const toX = (x: number) => ((x - xMin) / (xMax - xMin)) * plotW + padLeft;
+const toY = (y: number) => (1 - (y - yMin) / (yMax - yMin)) * plotH + padTop;
+
+// MSE: L = (ŷ - 0)² = ŷ² (y=0固定)
+const pts: string[] = [];
+for (let i = 0; i <= 200; i++) {
+  const yhat = xMin + (xMax - xMin) * (i / 200);
+  const L = yhat * yhat; // (ŷ - 0)²
+  if (L > yMax) continue;
+  pts.push(`${toX(yhat).toFixed(2)},${toY(L).toFixed(2)}`);
+}
+const polyline = pts.join(" ");
+
+const axisY = toY(0);
+const axisX = padLeft;
+const x0 = toX(0);
+
+const xTicks = [-2, -1, 0, 1, 2].map((v) => ({ v, px: toX(v) }));
+const yTicks = [0, 1, 2, 3, 4].map((v) => ({ v, py: toY(v) }));
+---
+
+<figure class="inline-chart">
+  <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} aria-label="MSE損失のグラフ" role="img">
+    <rect x="0" y="0" width={W} height={H} fill="#f6f7f9" rx="6" />
+
+    {yTicks.map(({ py }) => (
+      <line x1={axisX} y1={py} x2={axisX + plotW} y2={py} stroke="#d9dde2" stroke-width="1" />
+    ))}
+
+    {/* 最小点 x=0 の参照線 */}
+    <line x1={x0} y1={padTop} x2={x0} y2={axisY}
+          stroke="#5b636d" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" />
+
+    {/* 軸 */}
+    <line x1={axisX} y1={padTop} x2={axisX} y2={axisY + 2} stroke="#1b1f24" stroke-width="1.5" />
+    <line x1={axisX} y1={axisY} x2={axisX + plotW} y2={axisY} stroke="#1b1f24" stroke-width="1.5" />
+
+    {/* MSE 放物線 */}
+    <polyline points={polyline} fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round" />
+
+    {/* 目盛りラベル */}
+    {yTicks.map(({ v, py }) => (
+      <text x={axisX - 8} y={py + 4} text-anchor="end" font-size="12" fill="#5b636d">{v}</text>
+    ))}
+    {xTicks.map(({ v, px }) => (
+      <text x={px} y={axisY + 16} text-anchor="middle" font-size="12" fill="#5b636d">{v}</text>
+    ))}
+
+    {/* 軸ラベル */}
+    <text x={axisX + plotW + 8} y={axisY + 4} font-size="12" fill="#1b1f24" font-style="italic">ŷ</text>
+    <text x={axisX - 6} y={padTop - 6} text-anchor="middle" font-size="12" fill="#1b1f24">L</text>
+
+    {/* 最小点アノテーション */}
+    <circle cx={x0} cy={axisY} r="4" fill="#dc2626" />
+    <text x={x0 + 8} y={axisY - 8} font-size="11" fill="#dc2626">最小 (ŷ=y, L=0)</text>
+  </svg>
+  <figcaption>図: MSE損失 L = (ŷ − y)²（正解 y = 0 の場合）── 予測 ŷ が正解から離れるほど損失は放物線的に増加する。最小点（谷底）が「正解をぴったり予測できた」状態。</figcaption>
+</figure>
+
+<style>
+  .inline-chart {
+    margin: 1.25rem 0;
+    text-align: center;
+  }
+  .inline-chart svg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  .inline-chart figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #5b636d);
+  }
+</style>

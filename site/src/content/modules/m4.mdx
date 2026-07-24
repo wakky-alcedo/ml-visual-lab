@@ -14,6 +14,7 @@ import TermDef from "../../components/ui/TermDef.astro";
 import Column from "../../components/ui/Column.astro";
 import LossLandscape from "../../components/interactive/LossLandscape";
 import MiniNNTrainer from "../../components/interactive/MiniNNTrainer";
+import MSEChart from "../../components/charts/MSEChart.astro";
 
 ## このモジュールで学ぶこと — なぜ「学習のしくみ」なのか
 
@@ -36,6 +37,8 @@ import MiniNNTrainer from "../../components/interactive/MiniNNTrainer";
 $$
 L_{\mathrm{MSE}} = \frac{1}{N}\sum_{i=1}^{N} \left( \hat{y}_i - y_i \right)^2
 $$
+
+<MSEChart />
 
 前のモジュールで登場した分類問題では、softmaxの出力とone-hotの正解のずれを測る**交差エントロピー（cross-entropy）**を使いました。どちらの場合も本質は同じで、「予測が正解からどれだけ離れているか」を全データについて集計し、平均した一つの数を返します。この $L$ を、パラメータ $\theta$ を動かして小さくしていく——これが「学習する」ということの正体です。
 

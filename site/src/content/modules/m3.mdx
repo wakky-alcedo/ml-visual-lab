@@ -12,6 +12,7 @@ import ActivationGallery from "../../components/interactive/ActivationGallery.ts
 import SoftmaxCEViz from "../../components/interactive/SoftmaxCEViz.tsx";
 import ConvFilterLab from "../../components/interactive/ConvFilterLab.tsx";
 import CrossEntropyChart from "../../components/charts/CrossEntropyChart.astro";
+import ReLUChart from "../../components/charts/ReLUChart.astro";
 
 ## はじめに — 画像認識の主役、CNNへ
 
@@ -30,6 +31,8 @@ import CrossEntropyChart from "../../components/charts/CrossEntropyChart.astro";
 $$
 \mathrm{ReLU}(z) = \max(0, z)
 $$
+
+<ReLUChart />
 
 負の入力は0にし、正の入力はそのまま通すだけです。正の領域では傾きが常に1なので勾配が消えにくく、深いネットワークでも学習が安定します。計算も軽いため、現在の深層学習では標準的に使われます。ただしReLUは負側で完全に0になるため、一度その領域に入ったニューロンが二度と反応しなくなる「死んだニューロン」問題が起こり得ます。これを緩めたのが<TermDef en="Leaky ReLU">Leaky ReLU</TermDef>で、負側にもわずかな傾き（例: $0.01z$）を残して、完全には切らないようにした改良版です。
 

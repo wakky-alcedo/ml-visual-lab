@@ -14,7 +14,7 @@ export interface GlossaryTerm {
   /** 関連するモジュール番号（任意）。 */
   modules?: number[];
   /** インライングラフのキー（用語集ページで対応するチャートを描画する）。 */
-  chart?: "sigmoid" | "cross-entropy";
+  chart?: "sigmoid" | "cross-entropy" | "relu";
 }
 
 const rawTerms: GlossaryTerm[] = [
@@ -309,6 +309,7 @@ const rawTerms: GlossaryTerm[] = [
     description:
       "入力が正ならそのまま、負なら0を返すシンプルな活性化関数（f(z) = max(0, z)）です。正の領域で傾きが常に1なので勾配が消えにくく、深いネットワークでも学習が安定します。",
     modules: [3],
+    chart: "relu",
   },
   {
     en: "Leaky ReLU",

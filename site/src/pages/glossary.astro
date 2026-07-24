@@ -5,6 +5,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { glossary } from "../data/glossary";
 import SigmoidChart from "../components/charts/SigmoidChart.astro";
 import CrossEntropyChart from "../components/charts/CrossEntropyChart.astro";
+import ReLUChart from "../components/charts/ReLUChart.astro";
 ---
 
 <BaseLayout title="用語集" description="機械学習の主要用語を日英対訳で解説します。">
@@ -28,6 +29,7 @@ import CrossEntropyChart from "../components/charts/CrossEntropyChart.astro";
             {term.description}
             {term.chart === "sigmoid" && <SigmoidChart />}
             {term.chart === "cross-entropy" && <CrossEntropyChart />}
+            {term.chart === "relu" && <ReLUChart />}
             {term.modules && term.modules.length > 0 && (
               <span class="glossary__modules">登場: M{term.modules.join(", M")}</span>
             )}
