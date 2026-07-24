@@ -11,6 +11,7 @@ import TermDef from "../../components/ui/TermDef.astro";
 import ActivationGallery from "../../components/interactive/ActivationGallery.tsx";
 import SoftmaxCEViz from "../../components/interactive/SoftmaxCEViz.tsx";
 import ConvFilterLab from "../../components/interactive/ConvFilterLab.tsx";
+import CrossEntropyChart from "../../components/charts/CrossEntropyChart.astro";
 
 ## はじめに — 画像認識の主役、CNNへ
 
@@ -55,6 +56,8 @@ $$
 $$
 L = -\log p_{\text{true}}
 $$
+
+<CrossEntropyChart />
 
 と書けます。正解クラスに高い確率を割り当てられていれば $p_{\text{true}}$ は1に近く、$-\log p_{\text{true}}$ は0に近づきます。逆に正解を低く見積もると損失は急激に大きくなり、強いペナルティがかかります。交差エントロピーは、確率分布どうしの隔たりを測る<TermDef en="KL Divergence">KLダイバージェンス</TermDef>と深い関係がありますが、ここでは「予測と正解の確率のズレを測る目盛りで、正解を自信を持って外すほど大きく罰する」という直感で十分です。
 

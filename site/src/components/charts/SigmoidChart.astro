@@ -1,0 +1,76 @@
+---
+const W = 480, H = 220;
+const padTop = 20, padRight = 20, padBottom = 40, padLeft = 50;
+const plotW = W - padLeft - padRight; // 410
+const plotH = H - padTop - padBottom; // 160
+
+const toX = (x: number) => ((x + 6) / 12) * plotW + padLeft;
+const toY = (y: number) => (1 - y) * plotH + padTop;
+
+const pts: string[] = [];
+for (let i = 0; i <= 200; i++) {
+  const x = -6 + (12 * i) / 200;
+  const y = 1 / (1 + Math.exp(-x));
+  pts.push(`${toX(x).toFixed(2)},${toY(y).toFixed(2)}`);
+}
+const polyline = pts.join(" ");
+
+const axisY = padTop + plotH; // 180
+const axisX = padLeft;        // 50
+const x0 = toX(0);            // 255
+const y05 = toY(0.5);         // 100
+
+const xTicks = [-4, -2, 0, 2, 4].map((v) => ({ v, px: toX(v) }));
+const yTicks = [0, 0.5, 1].map((v) => ({ v, py: toY(v) }));
+---
+
+<figure class="inline-chart">
+  <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} aria-label="シグモイド関数のグラフ" role="img">
+    <rect x="0" y="0" width={W} height={H} fill="#f6f7f9" rx="6" />
+
+    {yTicks.map(({ py }) => (
+      <line x1={axisX} y1={py} x2={axisX + plotW} y2={py} stroke="#d9dde2" stroke-width="1" />
+    ))}
+
+    <line x1={axisX} y1={y05} x2={axisX + plotW} y2={y05}
+          stroke="#2563eb" stroke-width="1.2" stroke-dasharray="5,4" opacity="0.6" />
+    <line x1={x0} y1={padTop} x2={x0} y2={axisY}
+          stroke="#5b636d" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" />
+
+    <line x1={axisX} y1={padTop} x2={axisX} y2={axisY} stroke="#1b1f24" stroke-width="1.5" />
+    <line x1={axisX} y1={axisY} x2={axisX + plotW} y2={axisY} stroke="#1b1f24" stroke-width="1.5" />
+
+    <polyline points={polyline} fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round" />
+
+    {yTicks.map(({ v, py }) => (
+      <text x={axisX - 8} y={py + 4} text-anchor="end" font-size="12" fill="#5b636d">{v}</text>
+    ))}
+    {xTicks.map(({ v, px }) => (
+      <text x={px} y={axisY + 16} text-anchor="middle" font-size="12" fill="#5b636d">{v}</text>
+    ))}
+
+    <text x={axisX + plotW + 8} y={axisY + 4} font-size="13" fill="#1b1f24" font-style="italic">z</text>
+    <text x={axisX - 4} y={padTop - 6} text-anchor="middle" font-size="12" fill="#1b1f24">σ(z)</text>
+
+    <circle cx={x0} cy={y05} r="4" fill="#2563eb" />
+    <text x={x0 + 8} y={y05 - 7} font-size="11" fill="#2563eb">σ(0) = 0.5</text>
+  </svg>
+  <figcaption>図: シグモイド関数 σ(z) ── z が大きいほど1に、小さいほど0に近づくS字曲線。出力は常に0〜1の範囲に収まる。</figcaption>
+</figure>
+
+<style>
+  .inline-chart {
+    margin: 1.25rem 0;
+    text-align: center;
+  }
+  .inline-chart svg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  .inline-chart figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #5b636d);
+  }
+</style>

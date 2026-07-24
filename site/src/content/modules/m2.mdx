@@ -13,6 +13,7 @@ import ColabBadge from "../../components/ui/ColabBadge.astro";
 import TermDef from "../../components/ui/TermDef.astro";
 import LogicNeuronBoard from "../../components/interactive/LogicNeuronBoard.tsx";
 import NeuronBoundary from "../../components/interactive/NeuronBoundary.tsx";
+import SigmoidChart from "../../components/charts/SigmoidChart.astro";
 
 ## はじめに — ネットワークを部品から理解する
 
@@ -41,6 +42,8 @@ $$
 $$
 \sigma(z) = \frac{1}{1 + e^{-z}}
 $$
+
+<SigmoidChart />
 
 シグモイドは入力 $z$ が大きいほど1に、小さいほど0に近づき、その間をなめらかなS字でつなぎます。signが「カクッと切り替わるスイッチ」なら、シグモイドは「じわっと開くバルブ」です。出力が0〜1に収まるため「その入力が正例である確からしさ（確率）」とみなせること、そしてなめらかなので学習（勾配を使った調整、モジュール4）に向くことが利点です。論理演算を手で組むときは直感的なsignで考え、実際に学習させるときはシグモイドを使う、と整理しておきましょう。
 

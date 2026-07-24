@@ -1,0 +1,73 @@
+---
+const W = 480, H = 220;
+const padTop = 20, padRight = 20, padBottom = 40, padLeft = 50;
+const plotW = W - padLeft - padRight; // 410
+const plotH = H - padTop - padBottom; // 160
+const Lmax = 4;
+
+const toX = (yhat: number) => yhat * plotW + padLeft;
+const toY = (L: number) => (1 - Math.min(L, Lmax) / Lmax) * plotH + padTop;
+
+const pts: string[] = [];
+for (let i = 1; i <= 200; i++) {
+  const yhat = 0.005 + 0.994 * (i / 200);
+  const L = -Math.log(yhat);
+  pts.push(`${toX(yhat).toFixed(2)},${toY(L).toFixed(2)}`);
+}
+const polyline = pts.join(" ");
+
+const axisY = padTop + plotH; // 180
+const axisX = padLeft;        // 50
+
+const xTicks = [0, 0.25, 0.5, 0.75, 1.0].map((v) => ({ v, px: toX(v) }));
+const yTicks = [0, 1, 2, 3, 4].map((v) => ({ v, py: toY(v) }));
+---
+
+<figure class="inline-chart">
+  <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} aria-label="交差エントロピー損失のグラフ" role="img">
+    <rect x="0" y="0" width={W} height={H} fill="#f6f7f9" rx="6" />
+
+    {yTicks.map(({ py }) => (
+      <line x1={axisX} y1={py} x2={axisX + plotW} y2={py} stroke="#d9dde2" stroke-width="1" />
+    ))}
+
+    <line x1={axisX} y1={padTop} x2={axisX} y2={axisY} stroke="#1b1f24" stroke-width="1.5" />
+    <line x1={axisX} y1={axisY} x2={axisX + plotW} y2={axisY} stroke="#1b1f24" stroke-width="1.5" />
+
+    <polyline points={polyline} fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round" />
+
+    {yTicks.map(({ v, py }) => (
+      <text x={axisX - 8} y={py + 4} text-anchor="end" font-size="12" fill="#5b636d">{v}</text>
+    ))}
+    {xTicks.map(({ v, px }) => (
+      <text x={px} y={axisY + 16} text-anchor="middle" font-size="11" fill="#5b636d">{v}</text>
+    ))}
+
+    <text x={axisX + plotW + 8} y={axisY + 4} font-size="12" fill="#1b1f24" font-style="italic">ŷ</text>
+    <text x={axisX - 6} y={padTop - 6} text-anchor="middle" font-size="12" fill="#1b1f24">L</text>
+
+    <circle cx={toX(1.0)} cy={toY(0)} r="4" fill="#dc2626" />
+    <text x={toX(1.0) - 10} y={toY(0) - 7} text-anchor="end" font-size="11" fill="#dc2626">ŷ=1 → L=0</text>
+
+    <circle cx={toX(0.1)} cy={toY(-Math.log(0.1))} r="4" fill="#dc2626" />
+    <text x={toX(0.1) + 8} y={toY(-Math.log(0.1)) - 4} font-size="11" fill="#dc2626">ŷ=0.1 → L≈2.3</text>
+  </svg>
+  <figcaption>図: 交差エントロピー損失 L = −log(ŷ)（正解クラスが y=1 の場合）── 予測確率 ŷ が0に近いほど損失が急増し、1に近いほど0へ近づく。</figcaption>
+</figure>
+
+<style>
+  .inline-chart {
+    margin: 1.25rem 0;
+    text-align: center;
+  }
+  .inline-chart svg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  .inline-chart figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #5b636d);
+  }
+</style>
